@@ -17,20 +17,6 @@ var routes = [
 	    }
 	},{
 		method: 'GET',
-		path: '/login',
-		config: {
-			auth: 'github-oauth',
-			handler: function (request, reply) {
-
-				if (request.auth.isAuthenticaed) {
-					request.auth.session.set(request.auth.credentials);
-					return reply('Hello ' + request.auth.credentials.profile.displayName);
-				}
-				reply('Not logged in...').code(401);
-			}
-		}
-	},{
-		method: 'GET',
 		path: '/account',
 		config: {
 			auth: {
@@ -39,8 +25,7 @@ var routes = [
 			handler: function (request, reply) {
 				// Show the account information if the have logged in already
                 // otherwise, send a 401
-                reply('Something something');
-				// reply(request.auth.credentials.profile);
+				reply(request.auth.credentials.profile);
 			}
 		}
 	},{
@@ -52,7 +37,7 @@ var routes = [
 			},
 			handler: function (request, reply) {
 
-				if(request.auth.isAuthenticaed) {
+				if(request.auth.isAuthenticated) {
 					return reply('welcome back ' + request.auth.credentials.profile.displayName);
 				}
 				reply.view('index');
@@ -60,10 +45,27 @@ var routes = [
 		}
 	},{
 		method: 'GET',
+		path: '/login',
+		config: {
+			auth: 'github-oauth',
+			handler: function (request, reply) {
+
+				if (request.auth.isAuthenticated) {
+					console.log(request.auth.session);
+					request.auth.session.set(request.auth.credentials);
+					return reply('Hello ' + request.auth.credentials.profile.displayName);
+				}
+				reply('Not logged in...').code(401);
+			}
+		}
+	},{
+		method: 'GET',
 		path: '/logout',
 		config: {
+			auth: false,
 			handler: function (request, reply) {
 				// Clear the session information
+				request.auth.session.clear();
 				reply.redirect();
 			}
 		}
