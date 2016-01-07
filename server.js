@@ -1,19 +1,31 @@
 var Hapi = require('hapi');
 var Bell = require('bell');
 var AuthCookie = require('hapi-auth-cookie');
+var Vision = require('vision');
+var Inert = require('inert');
+var jade = require('jade');
 var config = require('getconfig');
-var server = new Hapi.Server();
 var routes = require('./server/routes');
+var server = new Hapi.Server();
 
 server.connection({
 	host: 'localhost',
 	port: 8000});
 
-server.register([Bell, AuthCookie], function (err) {
+
+server.register([Bell, AuthCookie, Vision, Inert], function (err) {
 	if (err) {
 		console.error(err);
 		return process.exit(1);
 	}
+
+	server.views({
+	    engines: { jade: jade },
+	    path: __dirname + '/templates',
+	    compileOptions: {
+	    	pretty: true
+	    }
+	});
 
 	var authCookieOptions = {
 		password: 'cookie-encryption-password',

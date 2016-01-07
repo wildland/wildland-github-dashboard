@@ -20,6 +20,10 @@
     "bell": "^6.0.0",
     "getconfig": "^2.2.0",
     "hapi": "^12.0.1",
-    "hapi-auth-cookie": "^5.0.0"
+    "hapi-auth-cookie": "^5.0.0",
+    "inert": "^3.2.0",
+    "jade": "^1.11.0",
+    "jade-bootstrap": "^1.0.1",
+    "vision": "^4.0.1"
   }
 }
