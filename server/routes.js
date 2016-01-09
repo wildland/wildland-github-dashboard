@@ -1,4 +1,4 @@
-var views = require('./views');
+// var views = require('./views');
 
 var routes = [
 	{
@@ -51,8 +51,7 @@ var routes = [
 			handler: function (request, reply) {
 
 				if (request.auth.isAuthenticated) {
-					console.log(request.auth.session);
-					request.auth.session.set(request.auth.credentials);
+					request.cookieAuth.set(request.auth.credentials);
 					return reply('Hello ' + request.auth.credentials.profile.displayName);
 				}
 				reply('Not logged in...').code(401);
@@ -65,7 +64,7 @@ var routes = [
 			auth: false,
 			handler: function (request, reply) {
 				// Clear the session information
-				request.auth.session.clear();
+				request.cookieAuth.clear();
 				reply.redirect();
 			}
 		}
