@@ -1,0 +1,11 @@
+extends ./layout
+
+block content
+	.container
+		.row
+			.col-xs-6
+				div.list-group
+					each issue in issues
+						a.list-group-item(href=issue.html_url) #{issue.title}
+
+			.col-xs-6

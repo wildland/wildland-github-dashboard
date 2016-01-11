@@ -1,4 +1,4 @@
-// var views = require('./views');
+var views = require('./views');
 
 var routes = [
 	{
@@ -22,11 +22,7 @@ var routes = [
 			auth: {
 				mode: 'optional'
 			},
-			handler: function (request, reply) {
-				// Show the account information if the have logged in already
-                // otherwise, send a 401
-				reply(request.auth.credentials.profile);
-			}
+			handler: views.account.main
 		}
 	},{
 		method: 'GET',
@@ -38,7 +34,8 @@ var routes = [
 			handler: function (request, reply) {
 
 				if(request.auth.isAuthenticated) {
-					return reply('welcome back ' + request.auth.credentials.profile.displayName);
+					var context = { profile: request.auth.credentials.profile };
+					return reply.view('index', context);
 				}
 				reply.view('index');
 			}
@@ -51,10 +48,11 @@ var routes = [
 			handler: function (request, reply) {
 
 				if (request.auth.isAuthenticated) {
+					// store session info
 					request.cookieAuth.set(request.auth.credentials);
-					return reply('Hello ' + request.auth.credentials.profile.displayName);
+					return reply.redirect('/account');
 				}
-				reply('Not logged in...').code(401);
+				reply.view('401').code(401);
 			}
 		}
 	},{
@@ -65,7 +63,7 @@ var routes = [
 			handler: function (request, reply) {
 				// Clear the session information
 				request.cookieAuth.clear();
-				reply.redirect();
+				reply.redirect('/');
 			}
 		}
 	}];

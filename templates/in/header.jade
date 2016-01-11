@@ -8,5 +8,11 @@ nav.navbar.navbar-default.navbar-fixed-top
 				span.icon-bar
 			a.navbar-brand(href='#') Wildland
 			ul.nav.navbar-nav.navbar-right
-				li
-					a(href='/login') Login
+				if profile
+					li 
+						a(href='/account') Hello #{profile.displayName}!
+					li
+						a(href='/logout') Logout
+				else
+					li
+						a(href='/loging') Login

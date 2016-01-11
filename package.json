@@ -18,12 +18,14 @@
   "homepage": "https://github.com/one000mph/wildland-github-dashboard#readme",
   "dependencies": {
     "bell": "^6.0.0",
+    "bluebird": "^3.1.1",
     "getconfig": "^2.2.0",
     "hapi": "^12.0.1",
     "hapi-auth-cookie": "^5.0.0",
     "inert": "^3.2.0",
     "jade": "^1.11.0",
     "jade-bootstrap": "^1.0.1",
+    "lodash": "^3.10.1",
     "octonode": "^0.7.4",
     "vision": "^4.0.1"
   }
