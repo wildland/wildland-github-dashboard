@@ -9,53 +9,53 @@ var routes = require('./server/routes');
 var server = new Hapi.Server();
 
 server.connection({
-	host: 'localhost',
-	port: 8000});
+  host: 'localhost',
+  port: 8000
+});
 
+server.register([Bell, AuthCookie, Vision, Inert], function(err) {
+  if (err) {
+    console.error(err);
+    return process.exit(1);
+  }
 
-server.register([Bell, AuthCookie, Vision, Inert], function (err) {
-	if (err) {
-		console.error(err);
-		return process.exit(1);
-	}
+  server.views({
+    engines: { jade: jade },
+    path: __dirname + '/templates',
+    compileOptions: {
+      pretty: true,
+    }
+  });
 
-	server.views({
-	    engines: { jade: jade },
-	    path: __dirname + '/templates',
-	    compileOptions: {
-	    	pretty: true
-	    }
-	});
+  var authCookieOptions = {
+    password: 'cookie-encryption-password',
+    cookie: 'sitepoint-auth',
+    isSecure: false
+  };
 
-	var authCookieOptions = {
-		password: 'cookie-encryption-password',
-		cookie: 'sitepoint-auth',
-		isSecure: false
-	};
+  server.auth.strategy('site-point-cookie', 'cookie', authCookieOptions);
 
-	server.auth.strategy('site-point-cookie', 'cookie', authCookieOptions);
+  var bellAuthOptions = {
+    provider: 'github',
+    password: 'github-encryption-password',
+    scope: ['user:email', 'repo', 'read:org'],
+    clientId: config.githubOAuth.clientId,
+    clientSecret: config.githubOAuth.clientSecret,
+    isSecure: false
+  };
 
-	var bellAuthOptions = {
-		provider: 'github',
-		password: 'github-encryption-password',
-		scope: ['user:email', 'repo', 'read:org'],
-		clientId: config.githubOAuth.clientId,
-		clientSecret: config.githubOAuth.clientSecret,
-		isSecure: false
-	};
+  server.auth.strategy('github-oauth', 'bell', bellAuthOptions);
 
-	server.auth.strategy('github-oauth', 'bell', bellAuthOptions);
+  server.auth.default('site-point-cookie');
 
-	server.auth.default('site-point-cookie');
+  server.route(routes);
 
-	server.route(routes);
+  server.start(function(err) {
+    if (err) {
+      console.error(err);
+      return process.exit(1);
+    }
 
-	server.start(function (err) {
-		if (err) {
-			console.error(err);
-			return process.exit(1);
-		}
-
-		console.log('Server started at %s', server.info.uri);
-	});
+    console.log('Server started at %s', server.info.uri);
+  });
 });
