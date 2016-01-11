@@ -2,10 +2,17 @@ extends ./layout
 
 block content
 	.container
+		.page-header
+			p.lead Wildland Github Dashboard
 		.row
 			.col-xs-6
 				div.list-group
+					h3 Issues Assigned to You
 					each issue in issues
 						a.list-group-item(href=issue.html_url) #{issue.title}
 
 			.col-xs-6
+				div.list-group
+					h3 All Open Pull Requests in Wildland
+					each pr in pullRequests
+						a.list-group-item(href=pr.html_url) #{pr.title}
