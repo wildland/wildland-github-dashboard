@@ -34,8 +34,7 @@ var routes = [
 			handler: function (request, reply) {
 
 				if(request.auth.isAuthenticated) {
-					var context = { profile: request.auth.credentials.profile };
-					return reply.view('index', context);
+					return reply.redirect('/account');
 				}
 				reply.view('index');
 			}
