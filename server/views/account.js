@@ -92,7 +92,7 @@ module.exports = {
 	            var lastPageIssues;
 	            var thisPageIssues;
 	            if (headers.link) {
-	              var linkHeader = header.link;
+	              var linkHeader = headers.link;
 	              var pagination = octopage.parser(linkHeader);
 	              lastPageIssues = pagination.last;
 	              thisPageIssues = pagination.next - 1;
