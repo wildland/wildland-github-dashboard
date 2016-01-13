@@ -27,6 +27,16 @@ var routes = [
     }
   },
   {
+  	method: 'GET',
+  	path: '/account/issues/{page}',
+  	config: {
+  		auth: {
+  			mode: 'optional'
+  		},
+  		handler: views.account.nextIssuePage
+  	}
+  },
+  {
     method: 'GET',
     path: '/',
     config: {

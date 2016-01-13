@@ -4,7 +4,7 @@ var AuthCookie = require('hapi-auth-cookie');
 var Vision = require('vision');
 var Inert = require('inert');
 var jade = require('jade');
-var config = require('getconfig');
+var env = require('node-env-file');
 var routes = require('./server/routes');
 var server = new Hapi.Server();
 
@@ -33,14 +33,15 @@ server.register([Bell, AuthCookie, Vision, Inert], function(err) {
     isSecure: false
   };
 
+  env(__dirname + '/.env');
   server.auth.strategy('site-point-cookie', 'cookie', authCookieOptions);
 
   var bellAuthOptions = {
     provider: 'github',
     password: 'github-encryption-password',
     scope: ['user:email', 'repo', 'read:org'],
-    clientId: config.githubOAuth.clientId,
-    clientSecret: config.githubOAuth.clientSecret,
+    clientId: process.env.CLIENTID,
+    clientSecret: process.env.CLIENTSECRET,
     isSecure: false
   };
 

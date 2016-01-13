@@ -1,6 +1,9 @@
 extends ./layout
 
 block content
+	- var lastPageIssues = 5
+	- var thisPageIssues = 1
+
 	.container
 		.page-header
 			p.lead Wildland Github Dashboard
@@ -10,6 +13,17 @@ block content
 					h3 Issues Assigned to You
 					each issue in issues
 						a.list-group-item(href=issue.html_url) #{issue.title}
+					if lastPageIssues > 1
+						ul.pagination
+							- var page = 1
+							while page <= lastPageIssues
+								if thisPageIssues == page
+									li.active
+										a(href='/account/issues/' + page) #{page}
+								else
+									li
+										a(href='/account/issues/' + page) #{page}
+								- page++
 
 			.col-xs-6
 				div.list-group
