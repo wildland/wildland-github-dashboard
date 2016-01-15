@@ -146,8 +146,8 @@ module.exports = {
           if (err) { throw err; }
           if (isMember) {
             var requestedPage = request.params.page;
-            // get requested page of repos (just one for now since < 100 repos in wildland)
-            return ghorg.repos({per_page: 100, page: requestedPage},
+            // get requested page of repos
+            return ghorg.repos({page: requestedPage},
               function (err, repos, headers) {
                 if (err) { throw err; }
                 // handle pagination, pass in current and last page to template

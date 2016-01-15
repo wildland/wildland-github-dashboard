@@ -18,6 +18,21 @@ var routes = [
   },
   {
     method: 'GET',
+    path: '/js/{path*}',
+    config: {
+      auth: {
+        mode: 'optional'
+      },
+      handler: {
+        directory: {
+          path: './public/js/',
+          listing: false
+        }
+      }
+    }
+  },
+  {
+    method: 'GET',
     path: '/account',
     config: {
       auth: {
