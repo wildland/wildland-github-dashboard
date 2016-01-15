@@ -1,34 +1,7 @@
 extends ./layout
 
 block content
-	//- For demonstration purposes only
-	- var lastPageIssues = 5
-	- var thisPageIssues = 1
-	//- end demo code
 
 	.container
 		.page-header
 			p.lead Wildland Github Dashboard
-		.row
-			.col-xs-6
-				div.list-group
-					h3 Issues Assigned to You
-					each issue in issues
-						a.list-group-item(href=issue.html_url) #{issue.title}
-					if lastPageIssues > 1
-						ul.pagination
-							- var page = 1
-							while page <= lastPageIssues
-								if thisPageIssues == page
-									li.active
-										a(href='/account/issues/' + page) #{page}
-								else
-									li
-										a(href='/account/issues/' + page) #{page}
-								- page++
-
-			.col-xs-6
-				div.list-group
-					h3 All Open Pull Requests in Wildland
-					each pr in pullRequests
-						a.list-group-item(href=pr.html_url) #{pr.title}

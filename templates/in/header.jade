@@ -6,7 +6,14 @@ nav.navbar.navbar-default.navbar-fixed-top
 				span.icon-bar
 				span.icon-bar
 				span.icon-bar
-			a.navbar-brand(href='#') Wildland
+			a.navbar-brand(href='/') Wildland
+			ul.nav.navbar-nav.navbar-left
+				if profile
+					li
+						a(href='/account/issues/1') Issues
+					li
+						a(href='/account/pulls/1') Pull Requests
+
 			ul.nav.navbar-nav.navbar-right
 				if profile
 					li 

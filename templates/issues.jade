@@ -1,0 +1,39 @@
+extends ./layout
+
+block content
+
+	.container
+		.page-header
+			p.lead Wildland Github Dashboard
+		.row
+			div.table-container
+				table.table.table-hover
+					thead
+						tr
+							th id
+							th State
+							th Title
+							th Body
+					if issues.length === 0
+						tbody
+							tr
+								th(scope="row") No Issues For You Right Now :)
+					each issue in issues
+						tbody
+							a(href=issue.html_url)
+								tr
+									th(scope="row") #{issue.id}
+									td #{issue.state}
+									td #{issue.title}
+									td #{issue.body}
+					if lastPageIssues > 1
+						ul.pagination
+							- var page = 1
+							while page <= lastPageIssues
+								if thisPageIssues == page
+									li.active
+										a(href='/account/issues/' + page) #{page}
+								else
+									li
+										a(href='/account/issues/' + page) #{page}
+								- page++

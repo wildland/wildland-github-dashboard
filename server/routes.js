@@ -33,8 +33,18 @@ var routes = [
   		auth: {
   			mode: 'optional'
   		},
-  		handler: views.account.nextIssuePage
+  		handler: views.account.issues
   	}
+  },
+  {
+    method: 'GET',
+    path: '/account/pulls/{page}',
+    config: {
+      auth: {
+        mode: 'optional'
+      },
+      handler: views.account.pulls
+    }
   },
   {
     method: 'GET',

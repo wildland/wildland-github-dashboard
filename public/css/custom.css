@@ -1,3 +1,8 @@
 .navbar-header {
 	width: 100%;
 }
+
+.table-container {
+	background-color: #FFF;
+	margin: 5px;
+}

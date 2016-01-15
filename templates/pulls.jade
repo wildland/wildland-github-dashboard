@@ -1,0 +1,36 @@
+extends ./layout
+
+block content
+
+	.container
+		.page-header
+			p.lead Wildland Github Dashboard
+		.row
+			h3 Open Pull Requests
+			div.table-container
+				table.table.table-hover
+					thead
+						tr
+							th id
+							th State
+							th Title
+							th Body
+					each pull in pulls
+						tbody
+							a(href=pull.html_url)
+								tr
+									th(scope="row") #{pull.id}
+									td #{pull.state}
+									td #{pull.title}
+									td #{pull.body}
+					if lastPageRepos > 1
+						ul.pagination
+							- var page = 1
+							while page <= lastPageRepos
+								if thisPageRepos == page
+									li.active
+										a(href='/account/pulls/' + page) #{page}
+								else
+									li
+										a(href='/account/pulls/' + page) #{page}
+								- page++
