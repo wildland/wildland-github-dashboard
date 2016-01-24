@@ -114,12 +114,19 @@ module.exports = {
                 if (headers.link) {
                   var linkHeader = headers.link;
                   var pagination = octopage.parser(linkHeader);
-                  lastPageIssues = pagination.last;
-                  thisPageIssues = pagination.next - 1;
+                  if (!pagination.last) {
+                    // on last page
+                    lastPageRepos = parseInt(pagination.prev) + 1;
+                    thisPageRepos = lastPageRepos
+                  }
+                  else {
+                    lastPageRepos = pagination.last;
+                    thisPageRepos = pagination.next - 1;
+                  }
                 }
                 var issues = [];
                 _.forEach(body, function(n) {
-                  issues.push(_.pick(n, ['id', 'html_url', 'state', 'title', 'body']));
+                  issues.push(_.pick(n, ['id', 'html_url', 'state', 'title', 'assignee', 'repository', 'body']));
                 });
 
                 var context = {
@@ -156,7 +163,6 @@ module.exports = {
                 if (headers.link) {
                   var linkHeader = headers.link;
                   var pagination = octopage.parser(linkHeader);
-                  console.log(pagination);
                   if (!pagination.last) {
                     // on last page
                     lastPageRepos = parseInt(pagination.prev) + 1;
@@ -191,7 +197,7 @@ module.exports = {
                     var pullRequests = [];
                     prList = _.flatten(allPullRequests);
                     _.forEach(prList, function (n) {
-                      pullRequests.push(_.pick(n, ['id', 'html_url', 'state', 'title', 'body']));
+                      pullRequests.push(_.pick(n, ['id', 'html_url', 'state', 'title', 'head', 'body']));
                     });
                     var context = {
                       profile: request.auth.credentials.profile,

@@ -13,6 +13,8 @@ block content
 							th id
 							th State
 							th Title
+							th Repo
+							th Assignee
 							th Body
 					if issues.length === 0
 						tbody
@@ -20,12 +22,13 @@ block content
 								th(scope="row") No Issues For You Right Now :)
 					each issue in issues
 						tbody
-							a(href=issue.html_url)
-								tr
-									th(scope="row") #{issue.id}
-									td #{issue.state}
-									td #{issue.title}
-									td #{issue.body}
+							tr.clickable-row(data-href=issue.html_url)
+								th(scope="row") #{issue.id}
+								td #{issue.state}
+								td #{issue.title}
+								td #{issue.repository.name}
+								td #{issue.assignee.login}
+								td #{issue.body}
 					if lastPageIssues > 1
 						ul.pagination
 							- var page = 1

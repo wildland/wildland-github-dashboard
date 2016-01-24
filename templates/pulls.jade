@@ -1,7 +1,6 @@
 extends ./layout
 
 block content
-	-console.log(lastPageRepos, thisPageRepos)
 
 	.container
 		.page-header
@@ -15,6 +14,7 @@ block content
 							th id
 							th State
 							th Title
+							th Repo
 							th Body
 					if pulls.length === 0
 						tbody
@@ -22,11 +22,12 @@ block content
 								th(scope="row") No Open Pull Requests for these repos
 					each pull in pulls
 						tbody
-								tr.clickable-row(data-href=pull.html_url)
-									th(scope="row") #{pull.id}
-									td #{pull.state}
-									td #{pull.title}
-									td #{pull.body}
+							tr.clickable-row(data-href=pull.html_url)
+								th(scope="row") #{pull.id}
+								td #{pull.state}
+								td #{pull.title}
+								td #{pull.head.repo.name}
+								td #{pull.body}
 			if lastPageRepos > 1
 				ul.pagination
 					- var page = 1
