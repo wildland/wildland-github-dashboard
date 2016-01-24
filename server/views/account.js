@@ -156,8 +156,16 @@ module.exports = {
                 if (headers.link) {
                   var linkHeader = headers.link;
                   var pagination = octopage.parser(linkHeader);
-                  lastPageRepos = pagination.last;
-                  thisPageRepos = pagination.next - 1;
+                  console.log(pagination);
+                  if (!pagination.last) {
+                    // on last page
+                    lastPageRepos = parseInt(pagination.prev) + 1;
+                    thisPageRepos = lastPageRepos
+                  }
+                  else {
+                    lastPageRepos = pagination.last;
+                    thisPageRepos = pagination.next - 1;
+                  }
                 }
                 // get all pull requests for each repo
                 async.map(
@@ -182,7 +190,6 @@ module.exports = {
                   function (err, allPullRequests) {
                     var pullRequests = [];
                     prList = _.flatten(allPullRequests);
-                    console.log()
                     _.forEach(prList, function (n) {
                       pullRequests.push(_.pick(n, ['id', 'html_url', 'state', 'title', 'body']));
                     });
