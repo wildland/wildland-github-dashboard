@@ -2,41 +2,42 @@ extends ./layout
 
 block content
 
-	.container
-		.page-header
-			p.lead Wildland Github Dashboard
-		.row
-			div.table-container
-				table.table.table-hover
-					thead
-						tr
-							th id
-							th State
-							th Title
-							th Repo
-							th Assignee
-							th Body
-					if issues.length === 0
-						tbody
-							tr
-								th(scope="row") No Issues For You Right Now :)
-					each issue in issues
-						tbody
-							tr.clickable-row(data-href=issue.html_url)
-								th(scope="row") #{issue.id}
-								td #{issue.state}
-								td #{issue.title}
-								td #{issue.repository.name}
-								td #{issue.assignee.login}
-								td #{issue.body}
-					if lastPageIssues > 1
-						ul.pagination
-							- var page = 1
-							while page <= lastPageIssues
-								if thisPageIssues == page
-									li.active
-										a(href='/account/issues/' + page) #{page}
-								else
-									li
-										a(href='/account/issues/' + page) #{page}
-								- page++
+  .container
+    .page-header
+      p.lead Wildland Github Dashboard
+    .row
+      div.table-container
+        table.table.table-hover
+          thead
+            tr
+              th id
+              th State
+              th Title
+              th Repo
+              th Assignee
+              th Body
+          if issues.length === 0
+            tbody
+              tr
+                th(scope="row") No Issues For You Right Now :)
+          each issue in issues
+            tbody
+              tr
+                td(scope="row")
+                  a(href="issue.html_url") #{issue.id}
+                td #{issue.state}
+                td #{issue.title}
+                td #{issue.repository.name}
+                td #{issue.assignee.login}
+                td #{issue.body}
+          if lastPageIssues > 1
+            ul.pagination
+              - var page = 1
+              while page <= lastPageIssues
+                if thisPageIssues == page
+                  li.active
+                    a(href='/account/issues/' + page) #{page}
+                else
+                  li
+                    a(href='/account/issues/' + page) #{page}
+                - page++

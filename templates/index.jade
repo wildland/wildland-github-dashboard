@@ -1,12 +1,12 @@
 extends ./layout
 
 block content
-	.container
-		.page-header
-			p.lead Wildland Github Dashboard
+  .container
+    .page-header
+      p.lead Wildland Github Dashboard
 
-			if profile
-				p Welcome back #{profile.displayName}
+      if profile
+        p Welcome back #{profile.displayName}
 
-			form.form-signin(method='POST', action='/login')
-				a.btn.btn-lg.btn-primary.btn-block(href='/login') Login with Github
+      form.form-signin(method='POST', action='/login')
+        a.btn.btn-lg.btn-primary.btn-block(href='/login') Login with Github
