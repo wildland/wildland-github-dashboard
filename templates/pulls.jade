@@ -2,40 +2,41 @@ extends ./layout
 
 block content
 
-	.container
-		.page-header
-			p.lead Wildland Github Dashboard
-		.row
-			h3 Open Pull Requests
-			div.table-container
-				table.table.table-hover
-					thead
-						tr
-							th id
-							th State
-							th Title
-							th Repo
-							th Body
-					if pulls.length === 0
-						tbody
-							tr
-								th(scope="row") No Open Pull Requests for these repos
-					each pull in pulls
-						tbody
-							tr.clickable-row(data-href=pull.html_url)
-								th(scope="row") #{pull.id}
-								td #{pull.state}
-								td #{pull.title}
-								td #{pull.head.repo.name}
-								td #{pull.body}
-			if lastPageRepos > 1
-				ul.pagination
-					- var page = 1
-					while page <= lastPageRepos
-						if thisPageRepos == page
-							li.active
-								a(href='/account/pulls/' + page) #{page}
-						else
-							li
-								a(href='/account/pulls/' + page) #{page}
-						- page++
+  .container
+    .page-header
+      p.lead Wildland Github Dashboard
+    .row
+      h3 Open Pull Requests
+      div.table-container
+        table.table.table-hover
+          thead
+            tr
+              th id
+              th State
+              th Title
+              th Repo
+              th Body
+          if pulls.length === 0
+            tbody
+              tr
+                th(scope="row") No Open Pull Requests for these repos
+          each pull in pulls
+            tbody
+              tr
+                td(scope="row")
+                  a(href="pull.html_url") #{pull.id}
+                td #{pull.state}
+                td #{pull.title}
+                td #{pull.head.repo.name}
+                td #{pull.body}
+      if lastPageRepos > 1
+        ul.pagination
+          - var page = 1
+          while page <= lastPageRepos
+            if thisPageRepos == page
+              li.active
+                a(href='/account/pulls/' + page) #{page}
+            else
+              li
+                a(href='/account/pulls/' + page) #{page}
+            - page++
