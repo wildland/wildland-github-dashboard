@@ -26,3 +26,4 @@ Runs on [http://localhost:3000](http://localhost:3000)
  * Cleanup css
  * Add comments
  * Cleanup UI
+ * Make sure jade-->pug conversion worked
