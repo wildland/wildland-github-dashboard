@@ -3,7 +3,7 @@ var Bell = require('bell');
 var AuthCookie = require('hapi-auth-cookie');
 var Vision = require('vision');
 var Inert = require('inert');
-var jade = require('jade');
+var pug = require('pug');
 var routes = require('./server/routes');
 var server = new Hapi.Server();
 require('dotenv').config();
@@ -20,7 +20,7 @@ server.register([Bell, AuthCookie, Vision, Inert], function(err) {
   }
 
   server.views({
-    engines: { jade: jade },
+    engines: { pug: pug },
     path: __dirname + '/templates',
     compileOptions: {
       pretty: true,
